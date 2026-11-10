@@ -52,10 +52,34 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "co_search": {
+      "type": "co-search",
+      "blocks": {
+        "chip_origins": { "type": "chip", "settings": { "label": "Origins", "link": "shopify://collections/origins" } },
+        "chip_rb_singles": { "type": "chip", "settings": { "label": "Riftbound singles", "link": "shopify://collections/riftbound-singles" } },
+        "chip_pokemon": { "type": "chip", "settings": { "label": "Pokémon", "link": "shopify://collections/pokemon" } },
+        "chip_sealed": { "type": "chip", "settings": { "label": "Booster boxes", "link": "shopify://collections/sealed-product" } },
+        "chip_tickets": { "type": "chip", "settings": { "label": "Event tickets", "link": "shopify://collections/event-entry-ticket" } }
+      },
+      "block_order": [
+        "chip_origins",
+        "chip_rb_singles",
+        "chip_pokemon",
+        "chip_sealed",
+        "chip_tickets"
+      ],
+      "settings": {
+        "placeholder": "Search cards, sets or products…",
+        "bg": "#FAF8F4",
+        "padding_top": 18,
+        "padding_bottom": 16
+      }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "co_search"
   ]
 }
