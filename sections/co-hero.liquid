@@ -1,52 +1,117 @@
-{%- comment -%} Card Out — homepage hero (polished) {%- endcomment -%}
+{%- comment -%} Card Out — homepage hero slideshow (polished) {%- endcomment -%}
 {{ 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap' | stylesheet_tag }}
 
 <style>
-  #co-hero-{{ section.id }} { background: {{ section.settings.bg }}; color: #1A1A1A; font-family: 'Inter', var(--font-body-family); }
+  #co-hero-{{ section.id }} { position: relative; color: #1A1A1A; font-family: 'Inter', var(--font-body-family); overflow: hidden; }
+  #co-hero-{{ section.id }} .co-hero__track { display: flex; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  #co-hero-{{ section.id }} .co-hero__slide { flex: 0 0 100%; }
   #co-hero-{{ section.id }} .co-hero__inner { padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; text-align: center; }
-  #co-hero-{{ section.id }} .co-hero__kicker { margin: 0 0 1.4rem; font-size: 1.3rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #5A4708; }
-  #co-hero-{{ section.id }} h1 { margin: 0 auto 1.6rem; max-width: 76rem; font-family: 'Space Grotesk', var(--font-heading-family); font-weight: 700; font-size: clamp(3.6rem, 5vw, 5.6rem); line-height: 1.05; letter-spacing: -.02em; color: #1A1A1A; }
-  #co-hero-{{ section.id }} .co-hero__text { margin: 0 auto 2.8rem; max-width: 56rem; font-size: 1.8rem; line-height: 1.6; color: #3B3214; }
+  #co-hero-{{ section.id }} .co-hero__kicker { margin: 0 0 1.4rem; font-size: 1.3rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; opacity: .8; }
+  #co-hero-{{ section.id }} .co-hero__title { margin: 0 auto 1.6rem; max-width: 76rem; font-family: 'Space Grotesk', var(--font-heading-family); font-weight: 700; font-size: clamp(3.6rem, 5vw, 5.6rem); line-height: 1.05; letter-spacing: -.02em; color: inherit; }
+  #co-hero-{{ section.id }} .co-hero__text { margin: 0 auto 2.8rem; max-width: 56rem; font-size: 1.8rem; line-height: 1.6; opacity: .9; }
   #co-hero-{{ section.id }} .co-hero__ctas { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
-  #co-hero-{{ section.id }} .co-btn { display: inline-flex; align-items: center; min-height: 5rem; padding: 0 2.8rem; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 1.6rem; transition: transform .15s ease, box-shadow .15s ease; }
+  #co-hero-{{ section.id }} .co-btn { display: inline-flex; align-items: center; min-height: 5rem; padding: 0 2.8rem; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 1.6rem; transition: transform .15s ease; }
   #co-hero-{{ section.id }} .co-btn:hover { transform: translateY(-1px); }
   #co-hero-{{ section.id }} .co-btn--primary { background: #F25C54; color: #FFFFFF; box-shadow: 0 8px 20px rgba(217,68,60,.25); }
   #co-hero-{{ section.id }} .co-btn--secondary { background: #FFFFFF; color: #1A1A1A; }
+  #co-hero-{{ section.id }} .co-hero__controls { position: absolute; left: 0; right: 0; bottom: 1.8rem; display: flex; justify-content: center; align-items: center; gap: 1.2rem; }
+  #co-hero-{{ section.id }} .co-hero__arrow { width: 4.4rem; height: 4.4rem; border-radius: 50%; border: 0; background: rgba(255,255,255,.85); color: #1A1A1A; cursor: pointer; display: grid; place-items: center; }
+  #co-hero-{{ section.id }} .co-hero__arrow svg { width: 1.8rem; height: 1.8rem; }
+  #co-hero-{{ section.id }} .co-hero__dot { width: 2.4rem; height: 2.4rem; border: 0; background: transparent; cursor: pointer; padding: 0; display: grid; place-items: center; }
+  #co-hero-{{ section.id }} .co-hero__dot span { width: .9rem; height: .9rem; border-radius: 50%; background: rgba(26,26,26,.3); transition: width .2s ease, background .2s ease; }
+  #co-hero-{{ section.id }} .co-hero__dot[aria-current="true"] span { width: 2.2rem; border-radius: 999px; background: #1A1A1A; }
+  @media (prefers-reduced-motion: reduce) { #co-hero-{{ section.id }} .co-hero__track { transition: none; } }
 </style>
 
-<section id="co-hero-{{ section.id }}">
-  <div class="page-width co-hero__inner">
-    {%- if section.settings.kicker != blank -%}<p class="co-hero__kicker">{{ section.settings.kicker }}</p>{%- endif -%}
-    <h1>{{ section.settings.heading }}</h1>
-    {%- if section.settings.text != blank -%}<p class="co-hero__text">{{ section.settings.text }}</p>{%- endif -%}
-    <div class="co-hero__ctas">
-      {%- if section.settings.button_label_1 != blank -%}
-        <a class="co-btn co-btn--primary" href="{{ section.settings.button_link_1 | default: routes.all_products_collection_url }}">{{ section.settings.button_label_1 }}</a>
-      {%- endif -%}
-      {%- if section.settings.button_label_2 != blank -%}
-        <a class="co-btn co-btn--secondary" href="{{ section.settings.button_link_2 | default: routes.root_url }}">{{ section.settings.button_label_2 }}</a>
-      {%- endif -%}
-    </div>
+<section id="co-hero-{{ section.id }}" aria-roledescription="carousel" aria-label="Featured">
+  <div class="co-hero__track" data-track>
+    {%- for block in section.blocks -%}
+      <div class="co-hero__slide" style="background: {{ block.settings.bg }}; color: {{ block.settings.fg }};" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} of {{ forloop.length }}" {{ block.shopify_attributes }}>
+        <div class="page-width co-hero__inner">
+          {%- if block.settings.kicker != blank -%}<p class="co-hero__kicker">{{ block.settings.kicker }}</p>{%- endif -%}
+          {%- if forloop.first -%}<h1 class="co-hero__title">{{ block.settings.heading }}</h1>{%- else -%}<h2 class="co-hero__title">{{ block.settings.heading }}</h2>{%- endif -%}
+          {%- if block.settings.text != blank -%}<p class="co-hero__text">{{ block.settings.text }}</p>{%- endif -%}
+          <div class="co-hero__ctas">
+            {%- if block.settings.button_label_1 != blank -%}
+              <a class="co-btn co-btn--primary" href="{{ block.settings.button_link_1 | default: routes.all_products_collection_url }}" {% unless forloop.first %}tabindex="-1"{% endunless %}>{{ block.settings.button_label_1 }}</a>
+            {%- endif -%}
+            {%- if block.settings.button_label_2 != blank -%}
+              <a class="co-btn co-btn--secondary" href="{{ block.settings.button_link_2 | default: routes.root_url }}" {% unless forloop.first %}tabindex="-1"{% endunless %}>{{ block.settings.button_label_2 }}</a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
   </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="co-hero__controls">
+      <button type="button" class="co-hero__arrow" data-prev aria-label="Previous slide"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      {%- for block in section.blocks -%}
+        <button type="button" class="co-hero__dot" data-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}" {% if forloop.first %}aria-current="true"{% endif %}><span></span></button>
+      {%- endfor -%}
+      <button type="button" class="co-hero__arrow" data-next aria-label="Next slide"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <script>
+      (function () {
+        var root = document.getElementById('co-hero-{{ section.id }}');
+        if (!root) return;
+        var track = root.querySelector('[data-track]');
+        var slides = track.children;
+        var dots = root.querySelectorAll('[data-dot]');
+        var i = 0, n = slides.length, timer = null;
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        function go(k) {
+          i = (k + n) % n;
+          track.style.transform = 'translateX(' + (-100 * i) + '%)';
+          for (var d = 0; d < dots.length; d++) dots[d].setAttribute('aria-current', d === i ? 'true' : 'false');
+          for (var s = 0; s < n; s++) {
+            slides[s].setAttribute('aria-hidden', s === i ? 'false' : 'true');
+            var links = slides[s].querySelectorAll('a');
+            for (var l = 0; l < links.length; l++) { if (s === i) links[l].removeAttribute('tabindex'); else links[l].setAttribute('tabindex', '-1'); }
+          }
+        }
+        function start() { if (reduce || {{ section.settings.autoplay_seconds }} === 0) return; stop(); timer = setInterval(function () { go(i + 1); }, {{ section.settings.autoplay_seconds }} * 1000); }
+        function stop() { if (timer) clearInterval(timer); timer = null; }
+        root.querySelector('[data-prev]').addEventListener('click', function () { go(i - 1); start(); });
+        root.querySelector('[data-next]').addEventListener('click', function () { go(i + 1); start(); });
+        for (var d = 0; d < dots.length; d++) (function (k) { dots[k].addEventListener('click', function () { go(k); start(); }); })(d);
+        root.addEventListener('mouseenter', stop); root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop); root.addEventListener('focusout', start);
+        go(0); start();
+      })();
+    </script>
+  {%- endif -%}
 </section>
 
 {% schema %}
 {
-  "name": "Card Out hero",
+  "name": "Card Out hero slides",
   "tag": "div",
   "class": "section",
+  "max_blocks": 6,
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Card Out · Singapore" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Your Riftbound card store in Singapore" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Singles from every set, sealed product and event entries. Order online, then self-collect or get it delivered across Singapore." },
-    { "type": "text", "id": "button_label_1", "label": "Primary button label", "default": "Shop singles" },
-    { "type": "url", "id": "button_link_1", "label": "Primary button link" },
-    { "type": "text", "id": "button_label_2", "label": "Secondary button label", "default": "Event tickets" },
-    { "type": "url", "id": "button_link_2", "label": "Secondary button link" },
-    { "type": "color", "id": "bg", "label": "Background", "default": "#F5C12E" },
+    { "type": "range", "id": "autoplay_seconds", "label": "Auto-rotate every (0 = off)", "min": 0, "max": 12, "step": 1, "unit": "s", "default": 6 },
     { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 72 },
-    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 72 }
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 96 }
   ],
-  "presets": [{ "name": "Card Out hero" }]
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Card Out · Singapore" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Your Riftbound card store in Singapore" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "text", "id": "button_label_1", "label": "Primary button label", "default": "Shop now" },
+        { "type": "url", "id": "button_link_1", "label": "Primary button link" },
+        { "type": "text", "id": "button_label_2", "label": "Secondary button label" },
+        { "type": "url", "id": "button_link_2", "label": "Secondary button link" },
+        { "type": "color", "id": "bg", "label": "Background", "default": "#F5C12E" },
+        { "type": "color", "id": "fg", "label": "Text colour", "default": "#1A1A1A" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Card Out hero slides", "blocks": [{ "type": "slide" }] }]
 }
 {% endschema %}
