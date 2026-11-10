@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "buylist": {
+      "type": "co-buylist",
+      "blocks": {
+        "src_riftbound": { "type": "source", "settings": { "collection": "riftbound-singles", "label": "Riftbound" } },
+        "src_pokemon": { "type": "source", "settings": { "collection": "pokemon-singles", "label": "Pokémon" } }
+      },
+      "block_order": ["src_riftbound", "src_pokemon"],
+      "settings": {
+        "kicker": "Buylist",
+        "heading": "Sell your cards to Card Out",
+        "intro": "Get cash or store credit for your Riftbound and Pokémon singles. Store credit pays more.",
+        "dropoff_text": "Bring your cards to the store. We check condition and pay you on the spot.",
+        "cash_pct": 50,
+        "credit_pct": 65,
+        "lp_pct": 85,
+        "mp_pct": 70,
+        "hp_pct": 50,
+        "min_offer": 5,
+        "max_qty": 8,
+        "terms": "Offers are estimates and are confirmed after we check your cards in store. Prices may change with the market.",
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": ["buylist"]
+}
