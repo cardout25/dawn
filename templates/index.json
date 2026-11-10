@@ -1,171 +1,114 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "co_icon_bar": {
+      "type": "co-icon-nav",
       "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
+        "bar_singles": { "type": "link", "settings": { "icon": "cards", "label": "Singles", "sub": "", "link": "shopify://collections/riftbound-singles" } },
+        "bar_sealed": { "type": "link", "settings": { "icon": "box", "label": "Sealed", "sub": "", "link": "shopify://collections/sealed-product" } },
+        "bar_tickets": { "type": "link", "settings": { "icon": "ticket", "label": "Event tickets", "sub": "", "link": "shopify://collections/event-entry-ticket" } },
+        "bar_accessories": { "type": "link", "settings": { "icon": "sleeve", "label": "Accessories", "sub": "", "link": "shopify://collections/accessories" } },
+        "bar_events": { "type": "link", "settings": { "icon": "calendar", "label": "Events", "sub": "", "link": "shopify://pages/events" } },
+        "bar_contact": { "type": "link", "settings": { "icon": "chat", "label": "Contact", "sub": "", "link": "shopify://pages/contact" } }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "disabled": true,
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
+      "block_order": ["bar_singles", "bar_sealed", "bar_tickets", "bar_accessories", "bar_events", "bar_contact"],
+      "settings": { "style": "bar", "heading": "", "bg": "#FFFFFF", "padding_top": 12, "padding_bottom": 12 }
     },
-    "rich_text_jk9yeH": {
-      "type": "rich-text",
+    "co_hero": {
+      "type": "co-hero",
       "blocks": {
-        "heading_RYnegU": {
-          "type": "heading",
-          "settings": {
-            "heading": "Your Riftbound card store in Singapore",
-            "heading_size": "h1"
-          }
-        },
-        "text_jeYgKL": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Singles from every set, sealed product and event entries. Order online, then self-collect or get it delivered across Singapore.</p>"
-          }
-        },
-        "button_3h36En": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop singles",
-            "button_link": "shopify://collections/riftbound-singles",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
+        "slide_store": { "type": "slide", "settings": {
+          "kicker": "Card Out · Singapore",
+          "heading": "Your Riftbound card store in Singapore",
+          "text": "Singles from every set, sealed product and event entries. Order online, then self-collect or get it delivered across Singapore.",
+          "button_label_1": "Shop singles", "button_link_1": "shopify://collections/riftbound-singles",
+          "button_label_2": "Event tickets", "button_link_2": "shopify://collections/event-entry-ticket",
+          "bg": "#F5C12E", "fg": "#1A1A1A" } },
+        "slide_origins": { "type": "slide", "settings": {
+          "kicker": "Set 1 · Origins",
+          "heading": "Origins singles, in stock now",
+          "text": "Rares and Epics from Riftbound's first set, Near Mint and ready to collect.",
+          "button_label_1": "Shop Origins", "button_link_1": "shopify://collections/origins",
+          "button_label_2": "All singles", "button_link_2": "shopify://collections/riftbound-singles",
+          "bg": "#FAF8F4", "fg": "#1A1A1A" } },
+        "slide_events": { "type": "slide", "settings": {
+          "kicker": "Game night",
+          "heading": "Play Riftbound at Card Out",
+          "text": "Weekly events in store. Book your seat online for ticketed events.",
+          "button_label_1": "Get a ticket", "button_link_1": "shopify://collections/event-entry-ticket",
+          "button_label_2": "See events", "button_link_2": "shopify://pages/events",
+          "bg": "#1A1A1A", "fg": "#FFFFFF" } }
       },
-      "block_order": [
-        "heading_RYnegU",
-        "text_jeYgKL",
-        "button_3h36En"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-89d7eb90-15fe-41ad-978b-8627c82e830c",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
+      "block_order": ["slide_store", "slide_origins", "slide_events"],
+      "settings": { "autoplay_seconds": 6, "padding_top": 72, "padding_bottom": 96 }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "co_perks": {
+      "type": "co-perks",
+      "blocks": {
+        "perk_collect": { "type": "perk", "settings": { "icon": "store", "bold": "Free self-collect", "text": "in store" } },
+        "perk_delivery": { "type": "perk", "settings": { "icon": "truck", "bold": "Singapore delivery", "text": "with tracking" } },
+        "perk_paynow": { "type": "perk", "settings": { "icon": "pay", "bold": "PayNow", "text": "at checkout" } }
+      },
+      "block_order": ["perk_collect", "perk_delivery", "perk_paynow"],
+      "settings": {}
+    },
+    "co_grid": {
+      "type": "co-card-grid",
+      "blocks": {
+        "chip_ogn": { "type": "chip", "settings": { "collection": "origins", "label": "" } },
+        "chip_sfd": { "type": "chip", "settings": { "collection": "spiritforged", "label": "" } },
+        "chip_unl": { "type": "chip", "settings": { "collection": "unleashed", "label": "" } },
+        "chip_ven": { "type": "chip", "settings": { "collection": "vendetta", "label": "" } },
+        "chip_rad": { "type": "chip", "settings": { "collection": "radiance", "label": "" } }
+      },
+      "block_order": ["chip_ogn", "chip_sfd", "chip_unl", "chip_ven", "chip_rad"],
       "settings": {
+        "heading": "New on the shelf",
+        "subheading": "Fresh Riftbound singles, Near Mint, English",
         "collection": "riftbound-singles",
-        "products_to_show": 8,
-        "title": "New on the shelf",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
+        "all_label": "All sets",
+        "sort": "collection",
+        "layout": "carousel",
+        "show_add_to_cart": true,
+        "limit": 12,
+        "columns": 4,
+        "low_stock": 5,
+        "padding_top": 64,
+        "padding_bottom": 48
       }
     },
-    "collection_list_H4efWC": {
-      "type": "collection-list",
+    "co_shop": {
+      "type": "co-icon-nav",
       "blocks": {
-        "featured_collection_enHie3": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "riftbound-singles"
-          }
-        },
-        "featured_collection_JweDDP": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "sealed-product"
-          }
-        },
-        "featured_collection_7LkNin": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "event-entry-ticket"
-          }
-        }
+        "shop_singles": { "type": "link", "settings": { "icon": "cards", "label": "Riftbound Singles", "sub": "Every set", "link": "shopify://collections/riftbound-singles" } },
+        "shop_origins": { "type": "link", "settings": { "icon": "card", "label": "Origins", "sub": "Set 1", "link": "shopify://collections/origins" } },
+        "shop_sealed": { "type": "link", "settings": { "icon": "box", "label": "Booster Box / Sealed", "sub": "Boxes, packs, decks", "link": "shopify://collections/sealed-product" } },
+        "shop_tickets": { "type": "link", "settings": { "icon": "ticket", "label": "Event Tickets", "sub": "Book your seat", "link": "shopify://collections/event-entry-ticket" } },
+        "shop_accessories": { "type": "link", "settings": { "icon": "sleeve", "label": "Accessories", "sub": "Sleeves, deck boxes", "link": "shopify://collections/accessories" } },
+        "shop_all": { "type": "link", "settings": { "icon": "spark", "label": "Shop all", "sub": "Everything in store", "link": "shopify://collections/all" } }
       },
-      "block_order": [
-        "featured_collection_enHie3",
-        "featured_collection_JweDDP",
-        "featured_collection_7LkNin"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Shop by category",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
+      "block_order": ["shop_singles", "shop_origins", "shop_sealed", "shop_tickets", "shop_accessories", "shop_all"],
+      "settings": { "style": "tiles", "heading": "Shop the store", "bg": "#FAF8F4", "padding_top": 64, "padding_bottom": 64 }
+    },
+    "co_community": {
+      "type": "co-category-tiles",
+      "blocks": {
+        "tile_events": { "type": "tile", "settings": { "collection": "", "link": "shopify://pages/events", "kicker": "Events", "title": "Events calendar", "show_count": false, "sub": "See what's on", "bg": "#F5C12E", "fg": "#1A1A1A" } },
+        "tile_about": { "type": "tile", "settings": { "collection": "", "link": "shopify://pages/about-us", "kicker": "About", "title": "About Card Out", "show_count": false, "sub": "Who we are", "bg": "#1A1A1A", "fg": "#FFFFFF" } },
+        "tile_contact": { "type": "tile", "settings": { "collection": "", "link": "shopify://pages/contact", "kicker": "Contact", "title": "Questions? Ask us", "show_count": false, "sub": "Get in touch", "bg": "#F25C54", "fg": "#FFFFFF" } }
+      },
+      "block_order": ["tile_events", "tile_about", "tile_contact"],
+      "settings": { "heading": "Join the community", "padding_top": 64, "padding_bottom": 64 }
+    },
+    "co_newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "nl_heading": { "type": "heading", "settings": { "heading": "Hear about new stock first", "heading_size": "h1" } },
+        "nl_text": { "type": "paragraph", "settings": { "text": "<p>One or two emails a month: new arrivals, restocks and events. No spam.</p>" } },
+        "nl_form": { "type": "email_form", "settings": {} }
+      },
+      "block_order": ["nl_heading", "nl_text", "nl_form"],
+      "settings": { "color_scheme": "scheme-89d7eb90-15fe-41ad-978b-8627c82e830c", "full_width": true, "padding_top": 56, "padding_bottom": 64 }
     }
   },
-  "order": [
-    "image_banner",
-    "rich_text_jk9yeH",
-    "featured_collection",
-    "collection_list_H4efWC"
-  ]
+  "order": ["co_icon_bar", "co_hero", "co_perks", "co_grid", "co_shop", "co_community", "co_newsletter"]
 }
