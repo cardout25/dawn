@@ -6,11 +6,11 @@
   #co-icons-{{ section.id }} .co-icon-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; text-decoration: none; color: #1A1A1A; border-radius: 1.4rem; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; }
   #co-icons-{{ section.id }} .co-icon-link--bar { padding: 1.2rem .8rem; min-height: 4.4rem; }
   #co-icons-{{ section.id }} .co-icon-link--bar:hover { background: #FAF8F4; }
-  #co-icons-{{ section.id }} .co-icon-link--tile { padding: 2.4rem 1.2rem; background: #FFFFFF; border: 1px solid #ECE8E1; min-height: 14rem; }
-  #co-icons-{{ section.id }} .co-icon-link--tile:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.1); border-color: #DDD8CF; }
+  #co-icons-{{ section.id }} .co-icon-link--tiles { padding: 2.4rem 1.2rem; background: #FFFFFF; border: 1px solid #ECE8E1; min-height: 14rem; }
+  #co-icons-{{ section.id }} .co-icon-link--tiles:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.1); border-color: #DDD8CF; }
   #co-icons-{{ section.id }} .co-icon-badge { display: grid; place-items: center; border-radius: 1.2rem; }
   #co-icons-{{ section.id }} .co-icon-link--bar .co-icon-badge { width: 4rem; height: 4rem; background: #FFF4D6; color: #B3352E; }
-  #co-icons-{{ section.id }} .co-icon-link--tile .co-icon-badge { width: 5.6rem; height: 5.6rem; background: #FFF4D6; color: #B3352E; }
+  #co-icons-{{ section.id }} .co-icon-link--tiles .co-icon-badge { width: 5.6rem; height: 5.6rem; background: #FFF4D6; color: #B3352E; }
   #co-icons-{{ section.id }} .co-icon-badge svg { width: 55%; height: 55%; }
   #co-icons-{{ section.id }} .co-icon-label { font-weight: 600; font-size: {% if section.settings.style == 'bar' %}1.4rem{% else %}1.6rem{% endif %}; line-height: 1.25; }
   #co-icons-{{ section.id }} .co-icon-sub { font-size: 1.3rem; color: #6B655C; margin-top: -.4rem; }
@@ -21,7 +21,7 @@
       #co-icons-{{ section.id }} .co-icons__list > li { flex: 0 0 8.4rem; scroll-snap-align: start; }
     {%- else -%}
       #co-icons-{{ section.id }} .co-icons__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-      #co-icons-{{ section.id }} .co-icon-link--tile { min-height: 12rem; padding: 1.8rem 1rem; }
+      #co-icons-{{ section.id }} .co-icon-link--tiles { min-height: 12rem; padding: 1.8rem 1rem; }
     {%- endif -%}
     #co-icons-{{ section.id }} h2 { font-size: 2.8rem; }
   }
