@@ -17,7 +17,7 @@
     <div class="co-cats__grid">
       {%- for block in section.blocks -%}
         {%- assign c = block.settings.collection -%}
-        <a class="co-cat" href="{% if c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" style="background: {{ block.settings.bg }}; color: {{ block.settings.fg }};" {{ block.shopify_attributes }}>
+        <a class="co-cat" href="{% if block.settings.link != blank %}{{ block.settings.link }}{% elsif c != blank %}{{ c.url }}{% else %}{{ routes.collections_url }}{% endif %}" style="background: {{ block.settings.bg }}; color: {{ block.settings.fg }};" {{ block.shopify_attributes }}>
           <span class="co-cat__kicker">{{ block.settings.kicker }}</span>
           <div>
             <span class="co-cat__title">{{ block.settings.title | default: c.title }}</span>
@@ -46,6 +46,7 @@
       "name": "Tile",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "url", "id": "link", "label": "Link (overrides collection)" },
         { "type": "text", "id": "kicker", "label": "Kicker", "default": "Category" },
         { "type": "text", "id": "title", "label": "Title (optional, uses collection name)" },
         { "type": "checkbox", "id": "show_count", "label": "Show item count", "default": false },
