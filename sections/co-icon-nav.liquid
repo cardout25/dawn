@@ -1,0 +1,105 @@
+{%- comment -%} Card Out — icon quick links (compact bar or larger tiles) {%- endcomment -%}
+<style>
+  #co-icons-{{ section.id }} { background: {{ section.settings.bg }}; color: #1A1A1A; font-family: 'Inter', var(--font-body-family); padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px; {% if section.settings.style == 'bar' %}border-bottom: 1px solid #ECE8E1;{% endif %} }
+  #co-icons-{{ section.id }} h2 { margin: 0 0 2.4rem; font-family: 'Space Grotesk', var(--font-heading-family); font-weight: 700; font-size: 3.4rem; letter-spacing: -.01em; color: #1A1A1A; }
+  #co-icons-{{ section.id }} .co-icons__list { list-style: none; margin: 0; padding: 0; display: grid; gap: {% if section.settings.style == 'bar' %}1rem{% else %}1.6rem{% endif %}; grid-template-columns: repeat({{ section.blocks.size | at_least: 1 | at_most: 8 }}, minmax(0, 1fr)); }
+  #co-icons-{{ section.id }} .co-icon-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; text-decoration: none; color: #1A1A1A; border-radius: 1.4rem; transition: background .15s ease, transform .15s ease, box-shadow .15s ease; }
+  #co-icons-{{ section.id }} .co-icon-link--bar { padding: 1.2rem .8rem; min-height: 4.4rem; }
+  #co-icons-{{ section.id }} .co-icon-link--bar:hover { background: #FAF8F4; }
+  #co-icons-{{ section.id }} .co-icon-link--tile { padding: 2.4rem 1.2rem; background: #FFFFFF; border: 1px solid #ECE8E1; min-height: 14rem; }
+  #co-icons-{{ section.id }} .co-icon-link--tile:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0,0,0,.1); border-color: #DDD8CF; }
+  #co-icons-{{ section.id }} .co-icon-badge { display: grid; place-items: center; border-radius: 1.2rem; }
+  #co-icons-{{ section.id }} .co-icon-link--bar .co-icon-badge { width: 4rem; height: 4rem; background: #FFF4D6; color: #B3352E; }
+  #co-icons-{{ section.id }} .co-icon-link--tile .co-icon-badge { width: 5.6rem; height: 5.6rem; background: #FFF4D6; color: #B3352E; }
+  #co-icons-{{ section.id }} .co-icon-badge svg { width: 55%; height: 55%; }
+  #co-icons-{{ section.id }} .co-icon-label { font-weight: 600; font-size: {% if section.settings.style == 'bar' %}1.4rem{% else %}1.6rem{% endif %}; line-height: 1.25; }
+  #co-icons-{{ section.id }} .co-icon-sub { font-size: 1.3rem; color: #6B655C; margin-top: -.4rem; }
+  @media screen and (max-width: 989px) { #co-icons-{{ section.id }} .co-icons__list { grid-template-columns: repeat({{ section.blocks.size | at_least: 1 | at_most: 4 }}, minmax(0, 1fr)); } }
+  @media screen and (max-width: 749px) {
+    {%- if section.settings.style == 'bar' -%}
+      #co-icons-{{ section.id }} .co-icons__list { display: flex; overflow-x: auto; gap: .4rem; scroll-snap-type: x mandatory; }
+      #co-icons-{{ section.id }} .co-icons__list > li { flex: 0 0 8.4rem; scroll-snap-align: start; }
+    {%- else -%}
+      #co-icons-{{ section.id }} .co-icons__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      #co-icons-{{ section.id }} .co-icon-link--tile { min-height: 12rem; padding: 1.8rem 1rem; }
+    {%- endif -%}
+    #co-icons-{{ section.id }} h2 { font-size: 2.8rem; }
+  }
+</style>
+
+<section id="co-icons-{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+    <nav aria-label="{{ section.settings.heading | default: 'Shop categories' | escape }}">
+      <ul class="co-icons__list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <a class="co-icon-link co-icon-link--{{ section.settings.style }}" href="{{ block.settings.link | default: routes.all_products_collection_url }}">
+              <span class="co-icon-badge" aria-hidden="true">
+                {%- case block.settings.icon -%}
+                  {%- when 'card' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6"/></svg>
+                  {%- when 'cards' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="5" width="12" height="16" rx="2"/><path d="M5 17V5a2 2 0 0 1 2-2h8"/></svg>
+                  {%- when 'box' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
+                  {%- when 'ticket' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>
+                  {%- when 'calendar' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+                  {%- when 'sleeve' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18H6z"/><path d="M6 7h12"/><path d="M10 5h4"/></svg>
+                  {%- when 'tag' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+                  {%- when 'spark' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg>
+                  {%- when 'chat' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/></svg>
+                  {%- when 'store' -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M9 20v-6h6v6"/></svg>
+                  {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+                {%- endcase -%}
+              </span>
+              <span class="co-icon-label">{{ block.settings.label }}</span>
+              {%- if section.settings.style == 'tiles' and block.settings.sub != blank -%}<span class="co-icon-sub">{{ block.settings.sub }}</span>{%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Card Out icon links",
+  "tag": "div",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "select", "id": "style", "label": "Style", "default": "bar", "options": [
+      { "value": "bar", "label": "Compact bar" },
+      { "value": "tiles", "label": "Large tiles" }
+    ] },
+    { "type": "text", "id": "heading", "label": "Heading (optional)" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 12 }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "card", "options": [
+          { "value": "card", "label": "Card" },
+          { "value": "cards", "label": "Stack of cards" },
+          { "value": "box", "label": "Sealed box" },
+          { "value": "ticket", "label": "Ticket" },
+          { "value": "calendar", "label": "Calendar" },
+          { "value": "sleeve", "label": "Sleeve / accessory" },
+          { "value": "tag", "label": "Price tag" },
+          { "value": "spark", "label": "Sparkle / new" },
+          { "value": "chat", "label": "Chat" },
+          { "value": "store", "label": "Store" },
+          { "value": "star", "label": "Star" }
+        ] },
+        { "type": "text", "id": "label", "label": "Label", "default": "Singles" },
+        { "type": "text", "id": "sub", "label": "Subtext (large tiles only)" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Card Out icon links", "blocks": [{ "type": "link" }, { "type": "link" }, { "type": "link" }, { "type": "link" }] }]
+}
+{% endschema %}
