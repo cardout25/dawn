@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "logo": "shopify://shop_images/5cead295-961d-4cc8-abb9-06c6e9194474.jpg",
     "logo_width": 90,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
@@ -216,7 +217,7 @@
           "text": "#121212",
           "button": "#121212",
           "button_label": "#ffffff",
-          "secondary_button_label": "#F25C54",
+          "secondary_button_label": "#f25c54",
           "shadow": "#121212"
         }
       }
