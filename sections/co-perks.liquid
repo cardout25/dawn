@@ -1,0 +1,51 @@
+{%- comment -%} Card Out — slim perks row {%- endcomment -%}
+<style>
+  #co-perks-{{ section.id }} { border-bottom: 1px solid #ECE8E1; background: #FFFFFF; font-family: 'Inter', var(--font-body-family); }
+  #co-perks-{{ section.id }} .co-perks__row { display: grid; grid-template-columns: repeat({{ section.blocks.size | at_least: 1 | at_most: 4 }}, minmax(0, 1fr)); gap: 2rem; padding: 2.2rem 0; }
+  #co-perks-{{ section.id }} .co-perk { display: flex; gap: 1.2rem; align-items: center; font-size: 1.5rem; color: #1A1A1A; }
+  #co-perks-{{ section.id }} .co-perk svg { flex: none; width: 2.2rem; height: 2.2rem; color: #D9443C; }
+  #co-perks-{{ section.id }} .co-perk strong { font-weight: 600; }
+  @media screen and (max-width: 749px) { #co-perks-{{ section.id }} .co-perks__row { grid-template-columns: 1fr; gap: 1.2rem; padding: 1.8rem 0; } }
+</style>
+
+<section id="co-perks-{{ section.id }}">
+  <div class="page-width co-perks__row">
+    {%- for block in section.blocks -%}
+      <div class="co-perk" {{ block.shopify_attributes }}>
+        {%- case block.settings.icon -%}
+          {%- when 'store' -%}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M9 20v-6h6v6"/></svg>
+          {%- when 'truck' -%}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h13v10H1z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="5.5" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg>
+          {%- when 'pay' -%}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM17 20h4v-3"/></svg>
+          {%- else -%}<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+        {%- endcase -%}
+        <span><strong>{{ block.settings.bold }}</strong> {{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Card Out perks row",
+  "tag": "div",
+  "class": "section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "star", "options": [
+          { "value": "store", "label": "Store" },
+          { "value": "truck", "label": "Delivery" },
+          { "value": "pay", "label": "PayNow / QR" },
+          { "value": "star", "label": "Star" }
+        ] },
+        { "type": "text", "id": "bold", "label": "Bold text", "default": "Perk" },
+        { "type": "text", "id": "text", "label": "Text", "default": "short detail" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Card Out perks row", "blocks": [{ "type": "perk" }, { "type": "perk" }, { "type": "perk" }] }]
+}
+{% endschema %}
