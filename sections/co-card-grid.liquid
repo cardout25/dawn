@@ -28,12 +28,30 @@
   #co-grid-{{ section.id }} .co-card__name { font-weight: 600; font-size: 1.6rem; line-height: 1.3; }
   #co-grid-{{ section.id }} .co-card__price { font-weight: 700; font-size: 1.6rem; color: #B3352E; }
   #co-grid-{{ section.id }} .co-empty { color: #6B655C; font-size: 1.6rem; }
+  #co-grid-{{ section.id }} .co-grid__item { display: flex; flex-direction: column; gap: 1.2rem; }
+  #co-grid-{{ section.id }} .co-add { margin: 0; }
+  #co-grid-{{ section.id }} .co-add button { width: 100%; min-height: 4.4rem; border-radius: 999px; border: 1px solid #1A1A1A; background: #FFFFFF; color: #1A1A1A; font: inherit; font-weight: 600; font-size: 1.4rem; cursor: pointer; transition: background .15s ease, color .15s ease; }
+  #co-grid-{{ section.id }} .co-add button:hover, #co-grid-{{ section.id }} .co-add--link:hover { background: #1A1A1A; color: #FFFFFF; }
+  #co-grid-{{ section.id }} .co-add--link { display: flex; align-items: center; justify-content: center; min-height: 4.4rem; border-radius: 999px; border: 1px solid #1A1A1A; color: #1A1A1A; text-decoration: none; font-weight: 600; font-size: 1.4rem; }
+  #co-grid-{{ section.id }} .co-add button[disabled] { border-color: #DDD8CF; color: #9A948A; cursor: not-allowed; background: #FFFFFF; }
+  #co-grid-{{ section.id }} .co-grid__list--carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 1.2rem; scrollbar-width: thin; }
+  #co-grid-{{ section.id }} .co-grid__list--carousel > li { flex: 0 0 calc((100% - {{ section.settings.columns | minus: 1 }} * 2.4rem) / {{ section.settings.columns }}); scroll-snap-align: start; }
+  #co-grid-{{ section.id }} .co-grid__nav { display: flex; gap: .8rem; }
+  #co-grid-{{ section.id }} .co-grid__nav button { width: 4.4rem; height: 4.4rem; border-radius: 50%; border: 1px solid #DDD8CF; background: #FFFFFF; color: #1A1A1A; cursor: pointer; display: grid; place-items: center; }
+  #co-grid-{{ section.id }} .co-grid__nav button:hover { border-color: #1A1A1A; }
+  #co-grid-{{ section.id }} .co-grid__nav svg { width: 1.8rem; height: 1.8rem; }
+  #co-grid-{{ section.id }} .co-grid__headright { display: flex; align-items: center; gap: 1.6rem; }
   @media screen and (max-width: 989px) { #co-grid-{{ section.id }} .co-grid__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media screen and (max-width: 749px) {
     #co-grid-{{ section.id }} .co-grid__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; }
     #co-grid-{{ section.id }} h2 { font-size: 2.8rem; }
     #co-grid-{{ section.id }} .co-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .4rem; }
     #co-grid-{{ section.id }} .co-chip { white-space: nowrap; }
+    #co-grid-{{ section.id }} .co-grid__list--carousel > li { flex-basis: 70%; }
+    #co-grid-{{ section.id }} .co-grid__nav { display: none; }
+  }
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    #co-grid-{{ section.id }} .co-grid__list--carousel > li { flex-basis: calc((100% - 2 * 2.4rem) / 3); }
   }
 </style>
 
@@ -44,7 +62,15 @@
         <h2>{{ section.settings.heading }}</h2>
         {%- if section.settings.subheading != blank -%}<p class="co-grid__sub">{{ section.settings.subheading }}</p>{%- endif -%}
       </div>
-      {%- if main != blank -%}<a class="co-grid__all" href="{{ main.url }}">View all {{ main.products_count }} →</a>{%- endif -%}
+      <div class="co-grid__headright">
+        {%- if main != blank -%}<a class="co-grid__all" href="{{ main.url }}">View all {{ main.products_count }} →</a>{%- endif -%}
+        {%- if section.settings.layout == 'carousel' -%}
+          <div class="co-grid__nav">
+            <button type="button" data-scroll="-1" aria-label="Scroll back"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <button type="button" data-scroll="1" aria-label="Scroll forward"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
 
     {%- if section.blocks.size > 0 -%}
@@ -59,7 +85,7 @@
     {%- endif -%}
 
     {%- if main != blank and items.size > 0 -%}
-      <ul class="co-grid__list">
+      <ul class="co-grid__list{% if section.settings.layout == 'carousel' %} co-grid__list--carousel{% endif %}" data-list>
         {%- for product in items limit: section.settings.limit -%}
           {%- liquid
             assign name = product.title | split: ' [' | first
@@ -75,7 +101,7 @@
             endfor
             assign qty = product.selected_or_first_available_variant.inventory_quantity
           -%}
-          <li>
+          <li class="co-grid__item">
             <a class="co-card" href="{{ product.url }}">
               <div class="co-card__art">
                 {%- if product.featured_image -%}
@@ -95,6 +121,18 @@
               <span class="co-card__name">{{ name }}</span>
               <span class="co-card__price">{{ product.price | money_with_currency }}</span>
             </a>
+            {%- if section.settings.show_add_to_cart -%}
+              {%- assign v = product.selected_or_first_available_variant -%}
+              {%- if product.has_only_default_variant or product.variants.size == 1 -%}
+                <form class="co-add" method="post" action="{{ routes.cart_add_url }}">
+                  <input type="hidden" name="id" value="{{ v.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" {% unless product.available %}disabled{% endunless %} aria-label="Add {{ name | escape }} to cart">{% if product.available %}Add to cart{% else %}Sold out{% endif %}</button>
+                </form>
+              {%- else -%}
+                <a class="co-add co-add--link" href="{{ product.url }}">Choose options</a>
+              {%- endif -%}
+            {%- endif -%}
           </li>
         {%- endfor -%}
       </ul>
@@ -102,6 +140,21 @@
       <p class="co-empty">Choose a collection for this section in the theme editor.</p>
     {%- endif -%}
   </div>
+  {%- if section.settings.layout == 'carousel' -%}
+    <script>
+      (function () {
+        var root = document.getElementById('co-grid-{{ section.id }}');
+        if (!root) return;
+        var list = root.querySelector('[data-list]');
+        if (!list) return;
+        root.querySelectorAll('[data-scroll]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            list.scrollBy({ left: list.clientWidth * 0.9 * Number(b.getAttribute('data-scroll')), behavior: 'smooth' });
+          });
+        });
+      })();
+    </script>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -119,6 +172,11 @@
       { "value": "collection", "label": "Collection order (newest)" },
       { "value": "price", "label": "Highest price first" }
     ] },
+    { "type": "select", "id": "layout", "label": "Layout", "default": "grid", "options": [
+      { "value": "grid", "label": "Grid" },
+      { "value": "carousel", "label": "Scrolling row" }
+    ] },
+    { "type": "checkbox", "id": "show_add_to_cart", "label": "Show Add to cart button", "default": true },
     { "type": "range", "id": "limit", "label": "Cards to show", "min": 4, "max": 24, "step": 1, "default": 8 },
     { "type": "range", "id": "columns", "label": "Columns on desktop", "min": 3, "max": 6, "step": 1, "default": 4 },
     { "type": "range", "id": "low_stock", "label": "Show 'Only X left' at or below", "min": 1, "max": 10, "step": 1, "default": 5 },
